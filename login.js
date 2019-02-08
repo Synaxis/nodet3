@@ -28,6 +28,15 @@ app.get('/', function(request, response) {
     response.sendFile(path.join(__dirname + '/login.html'));
 });
 
+//todo make it safe :( , dont use raw sql
+app.post('/auth', function(request, response)) {
+    var username = request.body.username;
+    var password = request.body.password;
+    // if (username && password) {
+    //     connection.open('')
+    // }
+}
+
 
 
 // app.get('/', (req, res) => res.send('Server Online'))
