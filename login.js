@@ -1,13 +1,14 @@
 const mysql = require('mysql')
 const session = require('express-session')
-const  bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const path = require('path') 
 const express = require('express')
 const app = express()
 const port = 80
 
 //set sql parameters
-var dbConn = mysql.createConnection({
+//js sucks
+var connection = mysql.createConnection({
     host:   '172.18.0.2', //TODO get docker ip automatically
     user:   'root',
     password: '1234',
@@ -20,7 +21,7 @@ app.use(session({
     saveUnitialized: true
 }));
 
-app.use(bodyparser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 //display the login.html
@@ -57,8 +58,13 @@ app.post('/auth', function(request, response) {
 	}
 });
 
+app.get('/home', function(request, response) {
+	if (request.session.loggedin) {
+		response.send('Welcome back, ' + request.session.username + '!');
+	} else {
+		response.send('Please login to view this page!');
+	}
+	response.end();
+});
 
-
-// app.get('/', (req, res) => res.send('Server Online'))
-
-// app.listen(port, () => console.log(`listening on port ${port}!`))
+app.listen(port, () => console.log(`listening on port ${port}!`))
