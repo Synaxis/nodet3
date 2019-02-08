@@ -1,3 +1,7 @@
+const mysql = require('mysql')
+const session = require('express-session')
+const  bodyParser = require('body-parser')
+const path = require('path') 
 const express = require('express')
 const app = express()
 const port = 80
